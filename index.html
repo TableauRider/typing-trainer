@@ -36,8 +36,11 @@
   .problem .ch.ok{color:#1a1a1a}
   .problem .ch.ng{color:var(--bad);background:#fbe5e5}
   .input-row{display:flex;gap:10px;margin:14px 0 18px}
-  .input-row input{flex:1;padding:14px 16px;border:1px solid var(--accent2);border-radius:10px;font-size:18px;font-family:"SF Mono",Menlo,monospace;outline:none;background:#fff;}
+  .input-row input{flex:1;padding:14px 16px;border:1px solid var(--accent2);border-radius:10px;font-size:18px;font-family:"SF Mono",Menlo,monospace;outline:none;background:#fff;color:transparent;caret-color:var(--accent2);transition:background .12s;}
   .input-row input:focus{box-shadow:0 0 0 3px rgba(122,161,227,.18)}
+  .input-row input.flash-ok{background:#e8f5ee;color:var(--good);}
+  .input-row input.flash-ng{background:#fbe5e5;color:var(--bad);}
+  @keyframes flashFade{0%{opacity:1}70%{opacity:1}100%{opacity:0}}
   .input-row button{padding:0 22px;border:1px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:14px;}
   .input-row button:hover{background:#f5f3ee}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
@@ -181,7 +184,7 @@
 </div>
 <div id="problem" class="problem"></div>
 <div class="input-row">
-  <input id="typeInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="ここに入力（手元を見ずに）">
+  <input id="typeInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="クリックしてキーを打鍵">
   <button id="nextBtn">次の問題</button>
 </div>
 <div class="stats">
@@ -379,25 +382,42 @@
   }
 
   // ── input ──
-  inputEl.addEventListener('input',()=>{
-    if(finished){inputEl.value='';return;}
-    const val=inputEl.value;if(!val)return;
-    const typed=val[val.length-1],expected=problem[pos];
-    startTimerIfNeeded();totalKeys++;
+  let flashTimer = null;
+  function flashInput(ok, char){
+    if(flashTimer) clearTimeout(flashTimer);
+    inputEl.classList.remove('flash-ok','flash-ng');
+    inputEl.value = char;
+    inputEl.style.color = '';
+    inputEl.classList.add(ok ? 'flash-ok' : 'flash-ng');
+    flashTimer = setTimeout(()=>{
+      inputEl.classList.remove('flash-ok','flash-ng');
+      inputEl.value = '';
+      inputEl.style.color = 'transparent';
+    }, ok ? 100 : 180);
+  }
+  inputEl.addEventListener('keydown', e=>{
+    if(e.key==='Tab'||e.key==='Enter') e.preventDefault();
+    if((e.ctrlKey||e.metaKey)) return;
+    if(e.key.length !== 1) return;
+    e.preventDefault();
+    if(finished) return;
+    const typed = e.key, expected = problem[pos];
+    startTimerIfNeeded(); totalKeys++;
     if(typed===expected){
-      pos++;lastWasMistake=false;
+      pos++; lastWasMistake=false;
+      flashInput(true, typed);
       if(pos>=problem.length){
-        finished=true;stopTimer();updateStats();
+        finished=true; stopTimer(); updateStats();
         if(!recordedThisRound){recordedThisRound=true;recordSession();}
       }
-    }else{
-      mistakes++;lastWasMistake=true;
-      let k=expected;if(KEY_OF_SYM[expected])k=KEY_OF_SYM[expected];
+    } else {
+      mistakes++; lastWasMistake=true;
+      flashInput(false, typed);
+      let k=expected; if(KEY_OF_SYM[expected])k=KEY_OF_SYM[expected];
       if(/[0-9]/.test(k))mistakesByKey[k]=(mistakesByKey[k]||0)+1;
     }
-    inputEl.value='';renderProblem();updateKeyboard();updateStats();
+    renderProblem(); updateKeyboard(); updateStats();
   });
-  inputEl.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&(e.key==='v'||e.key==='V'))e.preventDefault();});
   nextBtn.addEventListener('click',newProblem);
   lenInput.addEventListener('change',newProblem);
   document.querySelectorAll('.mode-btn').forEach(b=>b.addEventListener('click',()=>{
