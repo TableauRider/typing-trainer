@@ -35,14 +35,16 @@
   .problem .ch.cur{background:var(--accent);color:#1a1a1a}
   .problem .ch.ok{color:#1a1a1a}
   .problem .ch.ng{color:var(--bad);background:#fbe5e5}
-  .input-row{display:flex;gap:10px;margin:14px 0 18px}
-  .input-row input{flex:1;padding:14px 16px;border:1px solid var(--accent2);border-radius:10px;font-size:18px;font-family:"SF Mono",Menlo,monospace;outline:none;background:#fff;color:transparent;caret-color:var(--accent2);transition:background .12s;}
-  .input-row input:focus{box-shadow:0 0 0 3px rgba(122,161,227,.18)}
-  .input-row input.flash-ok{background:#e8f5ee;color:var(--good);}
-  .input-row input.flash-ng{background:#fbe5e5;color:var(--bad);}
-  @keyframes flashFade{0%{opacity:1}70%{opacity:1}100%{opacity:0}}
-  .input-row button{padding:0 22px;border:1px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:14px;}
-  .input-row button:hover{background:#f5f3ee}
+  .action-row{display:flex;gap:10px;margin:14px 0 18px;align-items:center}
+  .practice-hint{flex:1;padding:14px 16px;background:var(--panel);border-radius:10px;font-size:15px;color:var(--muted);text-align:center;cursor:default;border:2px dashed var(--line);user-select:none;letter-spacing:.04em;}
+  .action-row button{padding:0 22px;border:1px solid var(--line);background:#fff;border-radius:10px;cursor:pointer;font-size:14px;}
+  .action-row button:hover{background:#f5f3ee}
+  /* ── Key popup ── */
+  #keyPopup{position:fixed;top:42%;left:50%;transform:translate(-50%,-50%) scale(.6);font-size:130px;font-weight:900;font-family:"SF Mono",Menlo,Consolas,monospace;pointer-events:none;z-index:9999;opacity:0;line-height:1;min-width:160px;text-align:center;border-radius:24px;padding:10px 20px;}
+  .kp-ok{animation:kpOk .22s ease-out forwards;color:var(--good);background:rgba(58,165,93,.13);}
+  .kp-ng{animation:kpNg .34s ease-out forwards;color:var(--bad);background:rgba(208,74,74,.13);}
+  @keyframes kpOk{0%{opacity:0;transform:translate(-50%,-50%) scale(.55)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}40%{opacity:1;transform:translate(-50%,-50%) scale(1)}80%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1)}}
+  @keyframes kpNg{0%{opacity:0;transform:translate(-50%,-50%) scale(.55)}12%{opacity:1;transform:translate(-50%,-50%) scale(1.14)}30%{opacity:1;transform:translate(-50%,-50%) scale(1)}72%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1)}}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
   .stat{background:var(--panel);border-radius:12px;padding:16px 20px}
   .stat .lbl{font-size:12px;color:var(--muted);margin-bottom:4px}
@@ -200,10 +202,11 @@
   </div>
 </div>
 <div id="problem" class="problem"></div>
-<div class="input-row">
-  <input id="typeInput" type="text" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false" name="typing-trainer-input" placeholder="クリックしてキーを打鍵">
+<div class="action-row">
+  <div id="practiceHint" class="practice-hint">⌨ キーを打鍵してください</div>
   <button id="nextBtn">次の問題</button>
 </div>
+<div id="keyPopup"></div>
 <div class="stats">
   <div class="stat"><div class="lbl">経過時間</div><div class="val"><span id="elapsed">0.0</span>s</div></div>
   <div class="stat"><div class="lbl">速度</div><div class="val"><span id="cpm">0</span>/分</div></div>
@@ -325,8 +328,9 @@
   let histLimit = 15;
 
   const $=id=>document.getElementById(id);
-  const probEl=$('problem'),inputEl=$('typeInput'),nextBtn=$('nextBtn'),lenInput=$('lenInput');
+  const probEl=$('problem'),nextBtn=$('nextBtn'),lenInput=$('lenInput');
   const elapsedEl=$('elapsed'),cpmEl=$('cpm'),accEl=$('acc');
+  const popupEl=$('keyPopup');
   const kbEl=$('keyboard'),nextFingerEl=$('nextFinger');
 
   // build keyboard
@@ -395,27 +399,24 @@
     problem=generate();pos=0;startTime=null;stopTimer();
     totalKeys=0;mistakes=0;finished=false;recordedThisRound=false;lastWasMistake=false;
     mistakesByKey=Object.fromEntries(NUMS.map(n=>[n,0]));
-    inputEl.value='';inputEl.focus();
     renderProblem();updateKeyboard();updateStats();
   }
 
-  // ── input ──
-  let flashTimer = null;
-  function flashInput(ok, char){
-    if(flashTimer) clearTimeout(flashTimer);
-    inputEl.classList.remove('flash-ok','flash-ng');
-    inputEl.value = char;
-    inputEl.style.color = '';
-    inputEl.classList.add(ok ? 'flash-ok' : 'flash-ng');
-    flashTimer = setTimeout(()=>{
-      inputEl.classList.remove('flash-ok','flash-ng');
-      inputEl.value = '';
-      inputEl.style.color = 'transparent';
-    }, ok ? 100 : 180);
+  // ── input (popup mode) ──
+  let popTimer = null;
+  function showPopup(ok, char){
+    if(popTimer) clearTimeout(popTimer);
+    popupEl.className = '';
+    popupEl.textContent = char;
+    void popupEl.offsetWidth;          // reflow → アニメーション再スタート
+    popupEl.className = ok ? 'kp-ok' : 'kp-ng';
+    popTimer = setTimeout(()=>{ popupEl.className=''; popupEl.textContent=''; }, ok ? 260 : 400);
   }
-  inputEl.addEventListener('keydown', e=>{
-    if(e.key==='Tab'||e.key==='Enter') e.preventDefault();
-    if((e.ctrlKey||e.metaKey)) return;
+  document.addEventListener('keydown', e=>{
+    // 他のinput（長さ欄など）にフォーカスがある時は無視
+    if(document.activeElement && document.activeElement.tagName==='INPUT') return;
+    if(e.key==='Tab'){ e.preventDefault(); return; }
+    if(e.ctrlKey || e.metaKey) return;
     if(e.key.length !== 1) return;
     e.preventDefault();
     if(finished) return;
@@ -423,14 +424,14 @@
     startTimerIfNeeded(); totalKeys++;
     if(typed===expected){
       pos++; lastWasMistake=false;
-      flashInput(true, typed);
+      showPopup(true, typed);
       if(pos>=problem.length){
         finished=true; stopTimer(); updateStats();
         if(!recordedThisRound){recordedThisRound=true;recordSession();}
       }
     } else {
       mistakes++; lastWasMistake=true;
-      flashInput(false, typed);
+      showPopup(false, typed);
       let k=expected; if(KEY_OF_SYM[expected])k=KEY_OF_SYM[expected];
       if(/[0-9]/.test(k))mistakesByKey[k]=(mistakesByKey[k]||0)+1;
     }
@@ -986,7 +987,6 @@
   });
 
   // ── Init ──
-  inputEl.value = '';  // clear any browser-restored value
   newProblem();
   renderDashboard();
 })();
