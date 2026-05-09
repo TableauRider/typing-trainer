@@ -21,9 +21,9 @@
     max-width:1100px;margin-left:auto;margin-right:auto;
   }
   h1{font-size:18px;margin:0 0 18px;font-weight:600}
-  h2{font-size:16px;margin:0 0 14px;font-weight:600}
+  h2{font-size:16px;margin:0 0 6px;font-weight:600}
 
-  /* ── Practice area ── */
+  /* ── Practice ── */
   .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
   .mode-btn{border:1px solid var(--line);background:#fff;padding:9px 16px;border-radius:10px;cursor:pointer;font-size:14px;}
   .mode-btn:hover{background:#f5f3ee}
@@ -57,6 +57,14 @@
 
   /* ── Dashboard ── */
   .dash{margin-top:28px;border-top:1px solid var(--line);padding-top:24px}
+
+  /* Global view tabs */
+  .view-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+  .vtab{padding:8px 16px;border:1px solid var(--line);border-radius:20px;background:#fff;font-size:13px;cursor:pointer;transition:all .12s;}
+  .vtab:hover{background:#f5f3ee}
+  .vtab.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+
+  /* KPIs */
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
   .kpi{background:var(--panel);border-radius:12px;padding:16px}
   .kpi .lbl{font-size:11px;color:var(--muted)}
@@ -64,20 +72,20 @@
   .kpi .val .unit{font-size:14px;font-weight:500;color:var(--muted);margin-left:3px}
   .kpi .sub{font-size:11px;color:var(--muted);margin-top:6px}
   .kpi.fire .val{color:var(--warn)}
+
+  /* Panels */
   .panels{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
   .panel{background:var(--panel);border-radius:12px;padding:16px}
   .panel.full{grid-column:1/-1}
-  .empty{color:var(--muted);font-size:13px;padding:20px;text-align:center}
-
-  /* Panel header with tabs */
-  .panel-hd{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-  .panel-hd h3{font-size:13px;color:var(--muted);font-weight:500;margin:0;flex:1;min-width:80px}
-  .ptabs{display:flex;gap:4px;flex-wrap:wrap}
-  .ptab{padding:4px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;font-size:11px;cursor:pointer;white-space:nowrap;}
+  .panel-hd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .panel-hd h3{font-size:13px;color:var(--muted);font-weight:500;margin:0;flex:1}
+  .panel-hd .ptabs{display:flex;gap:4px}
+  .ptab{padding:4px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;font-size:11px;cursor:pointer;}
   .ptab:hover{background:#f5f3ee}
   .ptab.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+  .empty{color:var(--muted);font-size:13px;padding:20px;text-align:center}
 
-  /* Nav buttons (month/week navigation) */
+  /* Cal nav */
   .cal-nav{display:flex;align-items:center;gap:10px;margin-bottom:10px}
   .cal-nav button{padding:4px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;font-size:13px;cursor:pointer;}
   .cal-nav button:hover{background:#f5f3ee}
@@ -86,20 +94,21 @@
   /* 13-week grass */
   .cal-wrap{display:flex;align-items:flex-start;gap:8px;overflow-x:auto;padding-bottom:4px}
   .cal-dow{display:grid;grid-template-rows:repeat(7,14px);gap:3px;font-size:9px;color:var(--muted);padding-top:14px}
-  .cal-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,14px);gap:3px}
-  .cal-month-row{display:grid;grid-auto-flow:column;gap:3px;font-size:10px;color:var(--muted);height:14px;align-items:center}
+  .cal-grid13{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,14px);gap:3px}
   .cal-cell{width:14px;height:14px;border-radius:3px;background:var(--grass0)}
   .cal-cell.l1{background:var(--grass1)} .cal-cell.l2{background:var(--grass2)}
   .cal-cell.l3{background:var(--grass3)} .cal-cell.l4{background:var(--grass4)}
+  .cal-cell.hi{outline:2px solid var(--accent2);outline-offset:1px}
+  .cal-cell.dim{opacity:.3}
   .cal-legend{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);margin-top:8px;justify-content:flex-end}
   .cal-legend .cal-cell{width:11px;height:11px}
 
   /* Monthly calendar */
-  .month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
   .month-dow-row{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
   .month-dow{font-size:11px;color:var(--muted);text-align:center;padding:4px 0}
-  .month-cell{min-height:64px;border-radius:8px;background:#fff;border:1px solid var(--line);padding:5px 6px;position:relative;cursor:default;}
-  .month-cell.other{opacity:.35}
+  .month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .month-cell{min-height:64px;border-radius:8px;background:#fff;border:1px solid var(--line);padding:5px 6px;}
+  .month-cell.other{opacity:.3}
   .month-cell.today{border-color:var(--accent2);box-shadow:0 0 0 2px rgba(122,161,227,.3)}
   .month-cell.has-data{background:#f8fff9}
   .month-cell .mc-date{font-size:11px;color:var(--muted);font-family:"SF Mono",Menlo,monospace}
@@ -109,7 +118,7 @@
   .month-cell .mc-bar{height:4px;border-radius:2px;margin-top:6px;background:var(--line)}
   .month-cell .mc-bar-fill{height:100%;border-radius:2px;background:var(--good)}
 
-  /* Weekly view */
+  /* Weekly cards */
   .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
   .week-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;}
   .week-card.today{border-color:var(--accent2);box-shadow:0 0 0 2px rgba(122,161,227,.2)}
@@ -121,7 +130,7 @@
   .week-card .wc-empty{font-size:11px;color:var(--line);margin-top:12px}
   .week-card .wc-stat{font-size:11px;color:var(--muted);line-height:1.6}
 
-  /* Trend chart */
+  /* Chart */
   svg.chart{width:100%;height:200px;display:block}
   .chart-grid{stroke:#dcd9cf;stroke-width:1;stroke-dasharray:2 3}
   .chart-axis{stroke:#cfccc2;stroke-width:1}
@@ -135,10 +144,11 @@
   /* Weak keys */
   .wk-row{display:grid;grid-template-columns:46px 1fr 50px 60px;gap:8px;align-items:center;font-family:"SF Mono",Menlo,monospace;font-size:12px;margin:5px 0}
   .wk-row .k{color:var(--muted)} .wk-row .b{height:14px;background:#fff;border-radius:3px;overflow:hidden}
-  .wk-row .b > div{height:100%;background:var(--bad);opacity:.6}
+  .wk-row .b>div{height:100%;background:var(--bad);opacity:.6}
   .wk-row .v{text-align:right;color:#3a3a3a} .wk-row .delta{font-size:11px;text-align:right}
   .wk-row .delta.up{color:var(--bad)} .wk-row .delta.down{color:var(--good)} .wk-row .delta.flat{color:var(--muted)}
 
+  /* History */
   table.hist{width:100%;border-collapse:collapse;font-size:12px;font-family:"SF Mono",Menlo,monospace}
   table.hist th,table.hist td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right}
   table.hist th{font-weight:500;color:var(--muted);text-align:right}
@@ -152,7 +162,7 @@
 
   @media(max-width:720px){
     .panels{grid-template-columns:1fr} .kpis{grid-template-columns:repeat(2,1fr)}
-    .week-grid{grid-template-columns:repeat(4,1fr)} .month-cell{min-height:50px}
+    .week-grid{grid-template-columns:repeat(4,1fr)}
   }
 </style>
 </head>
@@ -169,7 +179,6 @@
     <input id="lenInput" type="number" min="3" max="60" value="15">
   </div>
 </div>
-
 <div id="problem" class="problem"></div>
 <div class="input-row">
   <input id="typeInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="ここに入力（手元を見ずに）">
@@ -185,12 +194,25 @@
   <div class="next-finger">次の指：<span id="nextFinger">-</span></div>
 </div>
 <div class="info">
-  <b>使い方：</b>モードを選んで「次の問題」を押し、入力欄にフォーカスして手元を見ずに打鍵。次のキーは仮想キーボードで強調、運指は10本指基準（1=左小指 / 2=左薬指 / 3=左中指 / 4・5=左人差し指 / 6・7=右人差し指 / 8=右中指 / 9=右薬指 / 0=右小指）。1問完走するごとに履歴が自動保存され、下のダッシュボードに反映されます。
+  <b>使い方：</b>モードを選んで「次の問題」を押し、入力欄にフォーカスして手元を見ずに打鍵。次のキーは仮想キーボードで強調、運指は10本指基準（1=左小指 / 2=左薬指 / 3=左中指 / 4・5=左人差し指 / 6・7=右人差し指 / 8=右中指 / 9=右薬指 / 0=右小指）。1問完走するごとに履歴が自動保存されます。
 </div>
 
 <!-- ═══════════ DASHBOARD ═══════════ -->
 <div class="dash">
-  <h2>習慣化ダッシュボード</h2>
+  <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:16px;flex-wrap:wrap">
+    <h2 style="margin:0">習慣化ダッシュボード</h2>
+    <span style="font-size:12px;color:var(--muted)" id="viewLabel"></span>
+  </div>
+
+  <!-- Global view tabs -->
+  <div class="view-tabs">
+    <button class="vtab" data-view="n10">直近10回</button>
+    <button class="vtab" data-view="n30">直近30回</button>
+    <button class="vtab" data-view="n50">直近50回</button>
+    <button class="vtab active" data-view="daily">日別</button>
+    <button class="vtab" data-view="weekly">週次</button>
+    <button class="vtab" data-view="monthly">月別</button>
+  </div>
 
   <!-- KPIs -->
   <div class="kpis">
@@ -201,16 +223,10 @@
   </div>
 
   <div class="panels">
-
-    <!-- Calendar panel -->
+    <!-- Calendar -->
     <div class="panel full">
       <div class="panel-hd">
-        <h3>練習カレンダー</h3>
-        <div class="ptabs">
-          <button class="ptab active" data-cal="grass">13週</button>
-          <button class="ptab" data-cal="month">月表示</button>
-          <button class="ptab" data-cal="week">週次</button>
-        </div>
+        <h3 id="calTitle">練習カレンダー</h3>
       </div>
       <div id="calNav" class="cal-nav" style="display:none">
         <button id="calPrev">‹</button>
@@ -220,17 +236,10 @@
       <div id="calBody"></div>
     </div>
 
-    <!-- Trend chart panel -->
+    <!-- Chart -->
     <div class="panel full">
       <div class="panel-hd">
-        <h3>速度・正確率の推移</h3>
-        <div class="ptabs">
-          <button class="ptab" data-trend="n10">直近10回</button>
-          <button class="ptab" data-trend="n30">直近30回</button>
-          <button class="ptab" data-trend="n50">直近50回</button>
-          <button class="ptab active" data-trend="daily">日別</button>
-          <button class="ptab" data-trend="monthly">月別</button>
-        </div>
+        <h3 id="chartTitle">速度・正確率の推移</h3>
       </div>
       <div class="legend">
         <span><span class="sw" style="background:var(--accent2)"></span>速度（文字/分）</span>
@@ -251,7 +260,7 @@
       <div id="byMode"></div>
     </div>
 
-    <!-- History table -->
+    <!-- History -->
     <div class="panel full">
       <div class="panel-hd">
         <h3>直近セッション</h3>
@@ -264,7 +273,6 @@
       </div>
       <div id="histTable"></div>
     </div>
-
   </div>
 
   <div class="dash-foot">
@@ -279,32 +287,32 @@
   const SYMS_SHIFT = ['!','@','#','$','%','^','&','*','(',')'];
   const KEY_OF_SYM = {'!':'1','@':'2','#':'3','$':'4','%':'5','^':'6','&':'7','*':'8','(':'9',')':'0'};
   const FINGER = {'1':'左小指','2':'左薬指','3':'左中指','4':'左人差し指','5':'左人差し指','6':'右人差し指','7':'右人差し指','8':'右中指','9':'右薬指','0':'右小指'};
-  const MODE_LABEL = {num:'数字 0-9', sym:'記号 Shift+0-9', mix:'数字＋記号', biz:'業務パターン'};
+  const MODE_LABEL = {num:'数字 0-9',sym:'記号 Shift+0-9',mix:'数字＋記号',biz:'業務パターン'};
   const STORAGE_KEY = 'typing-trainer.history.v1';
   const DAY_MS = 86400000;
   const DOW_JP = ['日','月','火','水','木','金','土'];
 
   // ── practice state ──
-  let mode='num', length=15, problem='', pos=0;
+  let pMode='num', length=15, problem='', pos=0;
   let startTime=null, timer=null, totalKeys=0, mistakes=0;
   let mistakesByKey=Object.fromEntries(NUMS.map(n=>[n,0]));
   let finished=false, recordedThisRound=false, lastWasMistake=false;
 
   // ── dashboard state ──
-  let calView='grass', calOffset=0;   // offset: months or weeks back from now
-  let trendView='daily';
-  let histLimit=15;
+  let view = 'daily';   // 'n10'|'n30'|'n50'|'daily'|'weekly'|'monthly'
+  let calOffset = 0;    // weeks/months offset for nav (0 = current)
+  let histLimit = 15;
 
   const $=id=>document.getElementById(id);
-  const probEl=$('problem'), inputEl=$('typeInput'), nextBtn=$('nextBtn'), lenInput=$('lenInput');
-  const elapsedEl=$('elapsed'), cpmEl=$('cpm'), accEl=$('acc');
-  const kbEl=$('keyboard'), nextFingerEl=$('nextFinger');
+  const probEl=$('problem'),inputEl=$('typeInput'),nextBtn=$('nextBtn'),lenInput=$('lenInput');
+  const elapsedEl=$('elapsed'),cpmEl=$('cpm'),accEl=$('acc');
+  const kbEl=$('keyboard'),nextFingerEl=$('nextFinger');
 
   // build keyboard
   for(let i=1;i<=10;i++){
-    const n=i===10?0:i, sym=SYMS_SHIFT[i-1];
+    const n=i===10?0:i,sym=SYMS_SHIFT[i-1];
     const div=document.createElement('div');
-    div.className='key'; div.dataset.num=String(n);
+    div.className='key';div.dataset.num=String(n);
     div.innerHTML=`<div class="top">${sym}</div><div class="bot">${n}</div>`;
     kbEl.appendChild(div);
   }
@@ -315,19 +323,18 @@
   function genBiz(){
     const pats=[
       ()=>`${randInt(2020,2029)}/${String(randInt(1,12)).padStart(2,'0')}/${String(randInt(1,28)).padStart(2,'0')}`,
-      ()=>`No.${randInt(1,9999)}`, ()=>`${randInt(1,99)}%`, ()=>`$${randInt(10,9999)}`,
+      ()=>`No.${randInt(1,9999)}`,()=>`${randInt(1,99)}%`,()=>`$${randInt(10,9999)}`,
       ()=>`v${randInt(1,9)}.${randInt(0,9)}.${randInt(0,9)}`,
       ()=>`#${String(randInt(1,999)).padStart(3,'0')}`,
-      ()=>`${randInt(1,12)}/${randInt(1,28)}`, ()=>`${randInt(100,999)}-${randInt(1000,9999)}`,
+      ()=>`${randInt(1,12)}/${randInt(1,28)}`,()=>`${randInt(100,999)}-${randInt(1000,9999)}`,
     ];
-    const out=[];
-    while(out.join(' ').length<length) out.push(rand(pats)());
+    const out=[];while(out.join(' ').length<length)out.push(rand(pats)());
     return out.join(' ').slice(0,length*2);
   }
   function generate(){
-    if(mode==='num'){let s='';for(let i=0;i<length;i++)s+=rand(NUMS);return s;}
-    if(mode==='sym'){let s='';for(let i=0;i<length;i++)s+=rand(SYMS_SHIFT);return s;}
-    if(mode==='mix'){let s='';for(let i=0;i<length;i++)s+=Math.random()<.5?rand(NUMS):rand(SYMS_SHIFT);return s;}
+    if(pMode==='num'){let s='';for(let i=0;i<length;i++)s+=rand(NUMS);return s;}
+    if(pMode==='sym'){let s='';for(let i=0;i<length;i++)s+=rand(SYMS_SHIFT);return s;}
+    if(pMode==='mix'){let s='';for(let i=0;i<length;i++)s+=Math.random()<.5?rand(NUMS):rand(SYMS_SHIFT);return s;}
     return genBiz();
   }
 
@@ -335,23 +342,23 @@
   function renderProblem(){
     probEl.innerHTML='';
     [...problem].forEach((c,i)=>{
-      const s=document.createElement('span'); s.className='ch';
-      if(i<pos) s.classList.add('ok');
+      const s=document.createElement('span');s.className='ch';
+      if(i<pos)s.classList.add('ok');
       else if(i===pos){s.classList.add('cur');if(lastWasMistake)s.classList.add('ng');}
-      s.textContent=c; probEl.appendChild(s);
+      s.textContent=c;probEl.appendChild(s);
     });
     if(finished){const d=document.createElement('span');d.className='done';d.textContent='✓ 完了';probEl.appendChild(d);}
   }
   function updateKeyboard(){
     document.querySelectorAll('.key').forEach(k=>k.classList.remove('next'));
     if(finished||pos>=problem.length){nextFingerEl.textContent='-';return;}
-    const c=problem[pos]; let key=c, isShift=false;
+    const c=problem[pos];let key=c,isShift=false;
     if(KEY_OF_SYM[c]){key=KEY_OF_SYM[c];isShift=true;}
     if(/[0-9]/.test(key)){
       const el=document.querySelector(`.key[data-num="${key}"]`);
       if(el)el.classList.add('next');
       nextFingerEl.textContent=isShift?`${FINGER[key]}（Shift同時押し：反対手の小指）`:FINGER[key];
-    } else nextFingerEl.textContent='-';
+    }else nextFingerEl.textContent='-';
   }
   function updateStats(){
     if(!startTime){elapsedEl.textContent='0.0';cpmEl.textContent='0';accEl.textContent='100';return;}
@@ -364,38 +371,38 @@
   function stopTimer(){if(timer){clearInterval(timer);timer=null;}}
   function newProblem(){
     length=Math.max(3,Math.min(60,parseInt(lenInput.value)||15));
-    problem=generate(); pos=0; startTime=null; stopTimer();
-    totalKeys=0; mistakes=0; finished=false; recordedThisRound=false; lastWasMistake=false;
+    problem=generate();pos=0;startTime=null;stopTimer();
+    totalKeys=0;mistakes=0;finished=false;recordedThisRound=false;lastWasMistake=false;
     mistakesByKey=Object.fromEntries(NUMS.map(n=>[n,0]));
-    inputEl.value=''; inputEl.focus();
-    renderProblem(); updateKeyboard(); updateStats();
+    inputEl.value='';inputEl.focus();
+    renderProblem();updateKeyboard();updateStats();
   }
 
   // ── input ──
   inputEl.addEventListener('input',()=>{
     if(finished){inputEl.value='';return;}
-    const val=inputEl.value; if(!val)return;
-    const typed=val[val.length-1], expected=problem[pos];
-    startTimerIfNeeded(); totalKeys++;
+    const val=inputEl.value;if(!val)return;
+    const typed=val[val.length-1],expected=problem[pos];
+    startTimerIfNeeded();totalKeys++;
     if(typed===expected){
-      pos++; lastWasMistake=false;
+      pos++;lastWasMistake=false;
       if(pos>=problem.length){
-        finished=true; stopTimer(); updateStats();
+        finished=true;stopTimer();updateStats();
         if(!recordedThisRound){recordedThisRound=true;recordSession();}
       }
-    } else {
-      mistakes++; lastWasMistake=true;
-      let k=expected; if(KEY_OF_SYM[expected])k=KEY_OF_SYM[expected];
+    }else{
+      mistakes++;lastWasMistake=true;
+      let k=expected;if(KEY_OF_SYM[expected])k=KEY_OF_SYM[expected];
       if(/[0-9]/.test(k))mistakesByKey[k]=(mistakesByKey[k]||0)+1;
     }
-    inputEl.value=''; renderProblem(); updateKeyboard(); updateStats();
+    inputEl.value='';renderProblem();updateKeyboard();updateStats();
   });
   inputEl.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&(e.key==='v'||e.key==='V'))e.preventDefault();});
   nextBtn.addEventListener('click',newProblem);
   lenInput.addEventListener('change',newProblem);
   document.querySelectorAll('.mode-btn').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); mode=b.dataset.mode; newProblem();
+    b.classList.add('active');pMode=b.dataset.mode;newProblem();
   }));
 
   // ── storage ──
@@ -407,13 +414,20 @@
     const cpm=e>0?Math.round((pos/e)*60):0;
     const acc=totalKeys>0?Math.round(((totalKeys-mistakes)/totalKeys)*100):100;
     const hist=loadHist();
-    hist.push({ts:Date.now(),mode,length:problem.length,elapsed:+e.toFixed(2),cpm,acc,totalKeys,mistakes,mistakesByKey:{...mistakesByKey}});
-    saveHist(hist); renderDashboard();
+    hist.push({ts:Date.now(),mode:pMode,length:problem.length,elapsed:+e.toFixed(2),cpm,acc,totalKeys,mistakes,mistakesByKey:{...mistakesByKey}});
+    saveHist(hist);renderDashboard();
   }
 
   // ── date utils ──
   function dayKey(ts){const d=new Date(ts);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
   function monthKey(ts){const d=new Date(ts);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;}
+  function weekKey(ts){
+    // Monday of that week
+    const d=new Date(ts);d.setHours(0,0,0,0);
+    const day=d.getDay(),diff=d.getDate()-day+(day===0?-6:1);
+    const mon=new Date(d);mon.setDate(diff);
+    return `${mon.getFullYear()}-${String(mon.getMonth()+1).padStart(2,'0')}-${String(mon.getDate()).padStart(2,'0')}`;
+  }
   function startOfDay(ts){const d=new Date(ts);d.setHours(0,0,0,0);return d.getTime();}
   function todayKey(){return dayKey(Date.now());}
 
@@ -421,18 +435,18 @@
   function calcStreak(rows){
     if(!rows.length)return 0;
     const days=new Set(rows.map(r=>dayKey(r.ts)));
-    let n=0, cur=startOfDay(Date.now());
+    let n=0,cur=startOfDay(Date.now());
     if(!days.has(dayKey(cur))){cur-=DAY_MS;if(!days.has(dayKey(cur)))return 0;}
     while(days.has(dayKey(cur))){n++;cur-=DAY_MS;}
     return n;
   }
   function renderKPIs(rows){
-    const tk=todayKey(), today=rows.filter(r=>dayKey(r.ts)===tk);
+    const tk=todayKey(),today=rows.filter(r=>dayKey(r.ts)===tk);
     $('kToday').textContent=today.length;
     $('kTodaySub').textContent=!today.length?'まだ未練習です':`平均 ${Math.round(today.reduce((s,r)=>s+r.cpm,0)/today.length)}/分・${Math.round(today.reduce((s,r)=>s+r.acc,0)/today.length)}%`;
     if(!today.length){$('kTodayBest').textContent='—';$('kTodayBestSub').textContent='—';}
     else{
-      const best=Math.max(...today.map(r=>r.cpm)), allBest=rows.length?Math.max(...rows.map(r=>r.cpm)):0;
+      const best=Math.max(...today.map(r=>r.cpm)),allBest=rows.length?Math.max(...rows.map(r=>r.cpm)):0;
       $('kTodayBest').textContent=best;
       $('kTodayBestSub').textContent=best>=allBest?'🏆 自己ベスト更新':`自己ベスト ${allBest}/分`;
     }
@@ -443,50 +457,55 @@
     $('kTotalSub').textContent=rows.length?`${new Set(rows.map(r=>dayKey(r.ts))).size}日間の累積`:'—';
   }
 
-  // ── Calendar ──
+  // ── Calendar renderers ──
   function buildDayCounts(rows){
-    const cnt={}, sumCpm={};
+    const cnt={},sumCpm={};
     rows.forEach(r=>{const k=dayKey(r.ts);cnt[k]=(cnt[k]||0)+1;sumCpm[k]=(sumCpm[k]||0)+r.cpm;});
     return {cnt,sumCpm};
   }
 
-  function renderGrass(rows){
+  // 13-week grass (with optional highlight set)
+  function renderGrass(rows, highlightDays){
     const {cnt,sumCpm}=buildDayCounts(rows);
     const today=new Date();today.setHours(0,0,0,0);
     const todayDow=today.getDay();
     const lastSun=new Date(today);lastSun.setDate(today.getDate()-todayDow);
     const firstSun=new Date(lastSun);firstSun.setDate(lastSun.getDate()-12*7);
-    let monthsHtml=''; let lastM=-1;
+    let mHtml='';let lastM=-1;
     for(let w=0;w<13;w++){
       const d=new Date(firstSun);d.setDate(firstSun.getDate()+w*7);
       const m=d.getMonth();
-      monthsHtml+=`<div style="font-size:10px;color:var(--muted);height:14px;display:flex;align-items:center">${m!==lastM?`${m+1}月`:''}</div>`;
+      mHtml+=`<div style="font-size:10px;color:var(--muted);height:14px;display:flex;align-items:center">${m!==lastM?`${m+1}月`:''}</div>`;
       lastM=m;
     }
-    let cellsHtml='';
+    let cHtml='';
     for(let w=0;w<13;w++){
       for(let dow=0;dow<7;dow++){
         const d=new Date(firstSun);d.setDate(firstSun.getDate()+w*7+dow);
-        if(d>today){cellsHtml+=`<div class="cal-cell" style="opacity:0"></div>`;continue;}
-        const k=dayKey(d.getTime()), c=cnt[k]||0;
+        if(d>today){cHtml+=`<div class="cal-cell" style="opacity:0"></div>`;continue;}
+        const k=dayKey(d.getTime()),c=cnt[k]||0;
         let lvl=0;if(c>=1)lvl=1;if(c>=2)lvl=2;if(c>=4)lvl=3;if(c>=7)lvl=4;
         const dStr=`${d.getMonth()+1}/${d.getDate()}`;
         const tip=c>0?`${dStr}：${c}回・平均 ${Math.round(sumCpm[k]/c)}/分`:`${dStr}：練習なし`;
-        cellsHtml+=`<div class="cal-cell${lvl>0?' l'+lvl:''}" title="${tip}"></div>`;
+        let cls=`cal-cell${lvl>0?' l'+lvl:''}`;
+        if(highlightDays){
+          if(highlightDays.has(k)) cls+=' hi';
+          else if(c>0) cls+=' dim';
+        }
+        cHtml+=`<div class="${cls}" title="${tip}"></div>`;
       }
     }
-    return `
-      <div class="cal-wrap">
-        <div class="cal-dow"><div></div><div>月</div><div></div><div>水</div><div></div><div>金</div><div></div></div>
-        <div>
-          <div style="display:grid;grid-auto-flow:column;gap:3px;margin-bottom:3px">${monthsHtml}</div>
-          <div class="cal-grid">${cellsHtml}</div>
-        </div>
+    return `<div class="cal-wrap">
+      <div class="cal-dow"><div></div><div>月</div><div></div><div>水</div><div></div><div>金</div><div></div></div>
+      <div>
+        <div style="display:grid;grid-auto-flow:column;gap:3px;margin-bottom:3px">${mHtml}</div>
+        <div class="cal-grid13">${cHtml}</div>
       </div>
-      <div class="cal-legend"><span>少</span>
-        <div class="cal-cell"></div><div class="cal-cell l1"></div><div class="cal-cell l2"></div>
-        <div class="cal-cell l3"></div><div class="cal-cell l4"></div><span>多</span>
-      </div>`;
+    </div>
+    <div class="cal-legend"><span>少</span>
+      <div class="cal-cell"></div><div class="cal-cell l1"></div><div class="cal-cell l2"></div>
+      <div class="cal-cell l3"></div><div class="cal-cell l4"></div><span>多</span>
+    </div>`;
   }
 
   function renderMonthCal(rows){
@@ -494,35 +513,26 @@
     const today=new Date();today.setHours(0,0,0,0);
     const base=new Date(today.getFullYear(),today.getMonth()+calOffset,1);
     $('calNavTitle').textContent=`${base.getFullYear()}年 ${base.getMonth()+1}月`;
-    const year=base.getFullYear(), mon=base.getMonth();
-    const firstDay=new Date(year,mon,1);
-    const lastDay=new Date(year,mon+1,0);
-    // find all session max to normalise bar
-    const allCounts=Object.values(cnt);
-    const maxCnt=Math.max(1,...allCounts);
+    const year=base.getFullYear(),mon=base.getMonth();
+    const firstDay=new Date(year,mon,1),lastDay=new Date(year,mon+1,0);
+    const allCounts=Object.values(cnt),maxCnt=Math.max(1,...allCounts);
     let html=`<div class="month-dow-row">`;
     DOW_JP.forEach(d=>html+=`<div class="month-dow">${d}</div>`);
     html+=`</div><div class="month-grid">`;
-    // leading blanks
     for(let i=0;i<firstDay.getDay();i++) html+=`<div class="month-cell other"></div>`;
     for(let d=1;d<=lastDay.getDate();d++){
       const dt=new Date(year,mon,d);
-      const k=dayKey(dt.getTime()), c=cnt[k]||0;
+      const k=dayKey(dt.getTime()),c=cnt[k]||0;
       const isToday=dt.getTime()===today.getTime();
-      const isOther=mon!==dt.getMonth();
       let cls='month-cell';
       if(isToday)cls+=' today';
       if(c>0)cls+=' has-data';
-      if(isOther)cls+=' other';
-      const barW=c>0?Math.round((c/maxCnt)*100):0;
       const avg=c>0?Math.round(sumCpm[k]/c):0;
       html+=`<div class="${cls}">
         <div class="mc-date">${d}</div>
-        ${c>0?`<div class="mc-count">${c}回</div><div class="mc-speed">${avg}/分</div>`:''}
-        ${c>0?`<div class="mc-bar"><div class="mc-bar-fill" style="width:${barW}%"></div></div>`:''}
+        ${c>0?`<div class="mc-count">${c}回</div><div class="mc-speed">${avg}/分</div><div class="mc-bar"><div class="mc-bar-fill" style="width:${Math.round((c/maxCnt)*100)}%"></div></div>`:''}
       </div>`;
     }
-    // trailing blanks
     const trailing=(7-((firstDay.getDay()+lastDay.getDate())%7))%7;
     for(let i=0;i<trailing;i++) html+=`<div class="month-cell other"></div>`;
     html+=`</div>`;
@@ -532,30 +542,22 @@
   function renderWeekCal(rows){
     const {cnt,sumCpm}=buildDayCounts(rows);
     const today=new Date();today.setHours(0,0,0,0);
-    // week starts Sunday; calOffset is number of weeks back
     const sun=new Date(today);sun.setDate(today.getDate()-today.getDay()+calOffset*7);
-    const weekDates=[];
-    for(let i=0;i<7;i++){const d=new Date(sun);d.setDate(sun.getDate()+i);weekDates.push(d);}
-    const first=weekDates[0], last=weekDates[6];
-    $('calNavTitle').textContent=`${first.getMonth()+1}/${first.getDate()} 〜 ${last.getMonth()+1}/${last.getDate()}`;
+    const weekDates=[];for(let i=0;i<7;i++){const d=new Date(sun);d.setDate(sun.getDate()+i);weekDates.push(d);}
+    $('calNavTitle').textContent=`${weekDates[0].getMonth()+1}/${weekDates[0].getDate()} 〜 ${weekDates[6].getMonth()+1}/${weekDates[6].getDate()}`;
     let html=`<div class="week-grid">`;
     weekDates.forEach(d=>{
-      const k=dayKey(d.getTime()), c=cnt[k]||0;
-      const isToday=d.getTime()===today.getTime();
-      const isFuture=d>today;
+      const k=dayKey(d.getTime()),c=cnt[k]||0;
+      const isToday=d.getTime()===today.getTime(),isFuture=d>today;
       let cls='week-card';
-      if(isToday)cls+=' today';
-      if(c>0)cls+=' has-data';
+      if(isToday)cls+=' today';if(c>0)cls+=' has-data';
       const avg=c>0?Math.round(sumCpm[k]/c):0;
-      // get sessions for this day to compute avg acc
-      const daySessions=rows.filter(r=>dayKey(r.ts)===k);
-      const avgAcc=daySessions.length?Math.round(daySessions.reduce((s,r)=>s+r.acc,0)/daySessions.length):0;
+      const daySess=rows.filter(r=>dayKey(r.ts)===k);
+      const avgAcc=daySess.length?Math.round(daySess.reduce((s,r)=>s+r.acc,0)/daySess.length):0;
       html+=`<div class="${cls}">
         <div class="wc-dow">${DOW_JP[d.getDay()]}</div>
         <div class="wc-date">${d.getDate()}</div>
-        ${isFuture?'<div class="wc-empty">—</div>':
-          c>0?`<div class="wc-n">${c}回</div><div class="wc-stat">${avg}/分<br>${avgAcc}%</div>`
-             :'<div class="wc-empty">練習なし</div>'}
+        ${isFuture?'<div class="wc-empty">—</div>':c>0?`<div class="wc-n">${c}回</div><div class="wc-stat">${avg}/分<br>${avgAcc}%</div>`:'<div class="wc-empty">練習なし</div>'}
       </div>`;
     });
     html+=`</div>`;
@@ -563,26 +565,35 @@
   }
 
   function renderCalendar(rows){
-    const nav=$('calNav'), body=$('calBody');
-    if(calView==='grass'){
+    const nav=$('calNav'),body=$('calBody'),title=$('calTitle');
+    if(view==='n10'||view==='n30'||view==='n50'){
       nav.style.display='none';
-      body.innerHTML=renderGrass(rows);
-    } else if(calView==='month'){
+      const n=parseInt(view.slice(1));
+      const pts=[...rows].sort((a,b)=>a.ts-b.ts).slice(-n);
+      const hiDays=new Set(pts.map(r=>dayKey(r.ts)));
+      title.textContent=`練習カレンダー（直近${n}回の対象日をハイライト）`;
+      body.innerHTML=renderGrass(rows,hiDays);
+    } else if(view==='daily'){
+      nav.style.display='none';
+      title.textContent='練習カレンダー（13週）';
+      body.innerHTML=renderGrass(rows,null);
+    } else if(view==='weekly'){
       nav.style.display='flex';
-      body.innerHTML=renderMonthCal(rows);
-    } else {
-      nav.style.display='flex';
+      title.textContent='練習カレンダー（週次）';
       body.innerHTML=renderWeekCal(rows);
+    } else { // monthly
+      nav.style.display='flex';
+      title.textContent='練習カレンダー（月別）';
+      body.innerHTML=renderMonthCal(rows);
     }
   }
 
-  // ── Trend chart ──
-  function drawChart(points, xLabel){
-    const svg=$('chartTrend'); svg.innerHTML='';
+  // ── Chart ──
+  function drawChart(points,labels,subtitleEl){
+    const svg=$('chartTrend');svg.innerHTML='';
     const W=600,H=200,P={l:34,r:34,t:14,b:22};
     if(!points.length){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" class="chart-label">データがありません</text>`;return;}
-    const cpms=points.map(p=>p.cpm);
-    const maxCpm=Math.max(20,...cpms)*1.1;
+    const maxCpm=Math.max(20,...points.map(p=>p.cpm))*1.1;
     const xToPx=i=>P.l+(points.length===1?(W-P.l-P.r)/2:i*(W-P.l-P.r)/(points.length-1));
     const cpmToPx=v=>H-P.b-(v/maxCpm)*(H-P.t-P.b);
     const accToPx=v=>H-P.b-(v/100)*(H-P.t-P.b);
@@ -594,59 +605,58 @@
       g+=`<text class="chart-label" x="${W-P.r+4}" y="${y+3}" text-anchor="start">${100-i*25}%</text>`;
     }
     g+=`<line class="chart-axis" x1="${P.l}" y1="${H-P.b}" x2="${W-P.r}" y2="${H-P.b}"/>`;
-    const cpmPath=points.map((p,i)=>`${i===0?'M':'L'}${xToPx(i)},${cpmToPx(p.cpm)}`).join(' ');
-    const accPath=points.map((p,i)=>`${i===0?'M':'L'}${xToPx(i)},${accToPx(p.acc)}`).join(' ');
-    g+=`<path class="chart-line" d="${cpmPath}"/>`;
-    g+=`<path class="chart-line acc" d="${accPath}"/>`;
+    g+=`<path class="chart-line" d="${points.map((p,i)=>`${i===0?'M':'L'}${xToPx(i)},${cpmToPx(p.cpm)}`).join(' ')}"/>`;
+    g+=`<path class="chart-line acc" d="${points.map((p,i)=>`${i===0?'M':'L'}${xToPx(i)},${accToPx(p.acc)}`).join(' ')}"/>`;
     points.forEach((p,i)=>{
       g+=`<circle class="chart-dot" cx="${xToPx(i)}" cy="${cpmToPx(p.cpm)}" r="3"><title>${p.tip}</title></circle>`;
       g+=`<circle class="chart-dot acc" cx="${xToPx(i)}" cy="${accToPx(p.acc)}" r="3"/>`;
     });
-    if(xLabel.length){
-      g+=`<text class="chart-label" x="${P.l}" y="${H-6}" text-anchor="start">${xLabel[0]}</text>`;
-      g+=`<text class="chart-label" x="${W-P.r}" y="${H-6}" text-anchor="end">${xLabel[xLabel.length-1]}</text>`;
-      if(xLabel.length>2){
-        const mid=Math.floor(xLabel.length/2);
-        g+=`<text class="chart-label" x="${xToPx(mid)}" y="${H-6}" text-anchor="middle">${xLabel[mid]}</text>`;
-      }
+    if(labels.length){
+      g+=`<text class="chart-label" x="${P.l}" y="${H-6}" text-anchor="start">${labels[0]}</text>`;
+      g+=`<text class="chart-label" x="${W-P.r}" y="${H-6}" text-anchor="end">${labels[labels.length-1]}</text>`;
+      if(labels.length>2){const m=Math.floor(labels.length/2);g+=`<text class="chart-label" x="${xToPx(m)}" y="${H-6}" text-anchor="middle">${labels[m]}</text>`;}
     }
     svg.innerHTML=g;
   }
 
-  function renderTrend(rows){
-    if(trendView.startsWith('n')){
-      const n=parseInt(trendView.slice(1));
+  function renderChart(rows){
+    const title=$('chartTitle'),label=$('viewLabel');
+    if(view.startsWith('n')){
+      const n=parseInt(view.slice(1));
       const pts=[...rows].sort((a,b)=>a.ts-b.ts).slice(-n);
-      const points=pts.map((r,i)=>{
-        const d=new Date(r.ts);
-        return {cpm:r.cpm,acc:r.acc,tip:`#${i+1} ${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}\n${MODE_LABEL[r.mode]}\n速度 ${r.cpm}/分・正確率 ${r.acc}%`};
-      });
-      const labels=pts.map((r,i)=>{const d=new Date(r.ts);return `${d.getMonth()+1}/${d.getDate()}`;});
+      title.textContent=`速度・正確率の推移（直近${n}回 / セッション別）`;
+      label.textContent=`${pts.length}件表示`;
+      const points=pts.map((r,i)=>{const d=new Date(r.ts);return {cpm:r.cpm,acc:r.acc,tip:`#${i+1} ${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}\n${MODE_LABEL[r.mode]}\n速度 ${r.cpm}/分・正確率 ${r.acc}%`};});
+      const labels=pts.map(r=>{const d=new Date(r.ts);return `${d.getMonth()+1}/${d.getDate()}`;});
       drawChart(points,labels);
-    } else if(trendView==='daily'){
+    } else if(view==='daily'){
       const byDay={};
-      rows.forEach(r=>{
-        const k=dayKey(r.ts);
-        if(!byDay[k])byDay[k]={cpm:0,acc:0,n:0,ts:startOfDay(r.ts)};
-        byDay[k].cpm+=r.cpm;byDay[k].acc+=r.acc;byDay[k].n++;
-      });
+      rows.forEach(r=>{const k=dayKey(r.ts);if(!byDay[k])byDay[k]={cpm:0,acc:0,n:0,ts:startOfDay(r.ts)};byDay[k].cpm+=r.cpm;byDay[k].acc+=r.acc;byDay[k].n++;});
       const cutoff=Date.now()-30*DAY_MS;
-      const days=Object.values(byDay).filter(d=>d.ts>=cutoff).sort((a,b)=>a.ts-b.ts)
-        .map(d=>({ts:d.ts,cpm:Math.round(d.cpm/d.n),acc:Math.round(d.acc/d.n),n:d.n}));
+      const days=Object.values(byDay).filter(d=>d.ts>=cutoff).sort((a,b)=>a.ts-b.ts).map(d=>({ts:d.ts,cpm:Math.round(d.cpm/d.n),acc:Math.round(d.acc/d.n),n:d.n}));
+      title.textContent='速度・正確率の推移（日別 / 直近30日）';
+      label.textContent=`${days.length}日分`;
       const points=days.map(d=>{const dt=new Date(d.ts);return {cpm:d.cpm,acc:d.acc,tip:`${dt.getMonth()+1}/${dt.getDate()}（${d.n}回）\n速度 ${d.cpm}/分・正確率 ${d.acc}%`};});
       const labels=days.map(d=>{const dt=new Date(d.ts);return `${dt.getMonth()+1}/${dt.getDate()}`;});
       drawChart(points,labels);
+    } else if(view==='weekly'){
+      const byWeek={};
+      rows.forEach(r=>{const k=weekKey(r.ts);if(!byWeek[k])byWeek[k]={cpm:0,acc:0,n:0};byWeek[k].cpm+=r.cpm;byWeek[k].acc+=r.acc;byWeek[k].n++;});
+      const weeks=Object.entries(byWeek).sort((a,b)=>a[0]<b[0]?-1:1).slice(-16)
+        .map(([k,v])=>({k,cpm:Math.round(v.cpm/v.n),acc:Math.round(v.acc/v.n),n:v.n}));
+      title.textContent='速度・正確率の推移（週次 / 直近16週）';
+      label.textContent=`${weeks.length}週分`;
+      const points=weeks.map(w=>({cpm:w.cpm,acc:w.acc,tip:`${w.k}週（${w.n}回）\n速度 ${w.cpm}/分・正確率 ${w.acc}%`}));
+      const labels=weeks.map(w=>{const[,m,d]=w.k.split('-');return `${parseInt(m)}/${parseInt(d)}週`;});
+      drawChart(points,labels);
     } else { // monthly
       const byMonth={};
-      rows.forEach(r=>{
-        const k=monthKey(r.ts);
-        if(!byMonth[k])byMonth[k]={cpm:0,acc:0,n:0};
-        byMonth[k].cpm+=r.cpm;byMonth[k].acc+=r.acc;byMonth[k].n++;
-      });
-      const months=Object.entries(byMonth).sort((a,b)=>a[0]<b[0]?-1:1)
-        .map(([k,v])=>({k,cpm:Math.round(v.cpm/v.n),acc:Math.round(v.acc/v.n),n:v.n}));
+      rows.forEach(r=>{const k=monthKey(r.ts);if(!byMonth[k])byMonth[k]={cpm:0,acc:0,n:0};byMonth[k].cpm+=r.cpm;byMonth[k].acc+=r.acc;byMonth[k].n++;});
+      const months=Object.entries(byMonth).sort((a,b)=>a[0]<b[0]?-1:1).map(([k,v])=>({k,cpm:Math.round(v.cpm/v.n),acc:Math.round(v.acc/v.n),n:v.n}));
+      title.textContent='速度・正確率の推移（月別 / 全期間）';
+      label.textContent=`${months.length}ヶ月分`;
       const points=months.map(m=>({cpm:m.cpm,acc:m.acc,tip:`${m.k}（${m.n}回）\n速度 ${m.cpm}/分・正確率 ${m.acc}%`}));
-      const labels=months.map(m=>{const[y,mo]=m.k.split('-');return `${parseInt(mo)}月`;});
+      const labels=months.map(m=>{const[,mo]=m.k.split('-');return `${parseInt(mo)}月`;});
       drawChart(points,labels);
     }
   }
@@ -663,7 +673,7 @@
       arr.forEach(r=>Object.entries(r.mistakesByKey||{}).forEach(([k,v])=>{t[k]=(t[k]||0)+v;}));
       return t;
     };
-    const recentT=sumKeys(recent), earlierT=sumKeys(earlier);
+    const recentT=sumKeys(recent),earlierT=sumKeys(earlier);
     const max=Math.max(1,...Object.values(recentT));
     const symFor=n=>SYMS_SHIFT[n==='0'?9:parseInt(n)-1];
     let html='';
@@ -683,8 +693,7 @@
   // ── Mode table ──
   function renderByMode(rows){
     const el=$('byMode');
-    const cutoff=Date.now()-30*DAY_MS;
-    const recent=rows.filter(r=>r.ts>=cutoff);
+    const recent=rows.filter(r=>r.ts>=Date.now()-30*DAY_MS);
     if(!recent.length){el.innerHTML='<div class="empty">データがありません</div>';return;}
     const groups={};
     recent.forEach(r=>{if(!groups[r.mode])groups[r.mode]={cpm:0,acc:0,n:0};groups[r.mode].cpm+=r.cpm;groups[r.mode].acc+=r.acc;groups[r.mode].n++;});
@@ -697,7 +706,7 @@
     el.innerHTML=html;
   }
 
-  // ── History table ──
+  // ── History ──
   function renderHistTable(rows){
     const el=$('histTable');
     if(!rows.length){el.innerHTML='<div class="empty">データがありません</div>';return;}
@@ -718,40 +727,31 @@
     const rows=loadHist();
     renderKPIs(rows);
     renderCalendar(rows);
-    renderTrend(rows);
+    renderChart(rows);
     renderWeakKeys(rows);
     renderByMode(rows);
     renderHistTable(rows);
   }
 
-  // ── Tab controls ──
-  document.querySelectorAll('.ptab[data-cal]').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('.ptab[data-cal]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); calView=b.dataset.cal; calOffset=0;
-    renderCalendar(loadHist());
+  // ── Global view tab ──
+  document.querySelectorAll('.vtab').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.vtab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    view=b.dataset.view;calOffset=0;
+    renderDashboard();
   }));
-  document.querySelectorAll('.ptab[data-trend]').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('.ptab[data-trend]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); trendView=b.dataset.trend;
-    renderTrend(loadHist());
-  }));
+
+  // ── Calendar nav ──
+  $('calPrev').addEventListener('click',()=>{calOffset--;renderCalendar(loadHist());});
+  $('calNext').addEventListener('click',()=>{if(calOffset<0){calOffset++;renderCalendar(loadHist());}});
+
+  // ── History tabs ──
   document.querySelectorAll('.ptab[data-hist]').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.ptab[data-hist]').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
     histLimit=b.dataset.hist==='all'?'all':parseInt(b.dataset.hist);
     renderHistTable(loadHist());
   }));
-
-  // ── Calendar nav ──
-  $('calPrev').addEventListener('click',()=>{
-    calOffset+= calView==='week'?-1:-1;
-    renderCalendar(loadHist());
-  });
-  $('calNext').addEventListener('click',()=>{
-    calOffset+= calView==='week'?1:1;
-    if(calOffset>0)calOffset=0; // don't go into future
-    renderCalendar(loadHist());
-  });
 
   // ── Export / Clear ──
   $('exportBtn').addEventListener('click',()=>{
@@ -770,7 +770,7 @@
   });
   $('clearBtn').addEventListener('click',()=>{
     if(confirm('保存された履歴をすべて削除します。よろしいですか？')){
-      localStorage.removeItem(STORAGE_KEY); renderDashboard();
+      localStorage.removeItem(STORAGE_KEY);renderDashboard();
     }
   });
 
