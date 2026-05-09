@@ -201,7 +201,7 @@
 </div>
 <div id="problem" class="problem"></div>
 <div class="input-row">
-  <input id="typeInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="クリックしてキーを打鍵">
+  <input id="typeInput" type="text" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false" name="typing-trainer-input" placeholder="クリックしてキーを打鍵">
   <button id="nextBtn">次の問題</button>
 </div>
 <div class="stats">
@@ -986,6 +986,7 @@
   });
 
   // ── Init ──
+  inputEl.value = '';  // clear any browser-restored value
   newProblem();
   renderDashboard();
 })();
