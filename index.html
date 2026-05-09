@@ -226,10 +226,11 @@
 
   <!-- Global view tabs -->
   <div class="view-tabs">
+    <button class="vtab active" data-view="today">今日</button>
     <button class="vtab" data-view="n10">直近10回</button>
     <button class="vtab" data-view="n30">直近30回</button>
     <button class="vtab" data-view="n50">直近50回</button>
-    <button class="vtab active" data-view="daily">日別</button>
+    <button class="vtab" data-view="daily">日別</button>
     <button class="vtab" data-view="weekly">週次</button>
     <button class="vtab" data-view="monthly">月別</button>
   </div>
@@ -319,7 +320,7 @@
   let finished=false, recordedThisRound=false, lastWasMistake=false;
 
   // ── dashboard state ──
-  let view = 'daily';   // 'n10'|'n30'|'n50'|'daily'|'weekly'|'monthly'
+  let view = 'today';   // 'today'|'n10'|'n30'|'n50'|'daily'|'weekly'|'monthly'
   let calOffset = 0;    // weeks/months offset for nav (0 = current)
   let histLimit = 15;
 
@@ -490,7 +491,21 @@
     const streak=calcStreak(rows);
     const streakSub=streak===0?'今日の練習で再スタート':rows.some(r=>dayKey(r.ts)===tk)?'今日も継続中 ✓':'今日まだ練習していません';
     const allBest=rows.length?Math.max(...rows.map(r=>r.cpm)):0;
-    if(view.startsWith('n')){
+    if(view==='today'){
+      const today=rows.filter(r=>dayKey(r.ts)===tk);
+      const avgCpm=today.length?Math.round(today.reduce((s,r)=>s+r.cpm,0)/today.length):0;
+      const bestCpm=today.length?Math.max(...today.map(r=>r.cpm)):0;
+      const avgAcc=today.length?Math.round(today.reduce((s,r)=>s+r.acc,0)/today.length):0;
+      const half=Math.floor(today.length/2);
+      const fAvg=half>1?Math.round(today.slice(0,half).reduce((s,r)=>s+r.cpm,0)/half):0;
+      const lAvg=half>1?Math.round(today.slice(-half).reduce((s,r)=>s+r.cpm,0)/half):0;
+      const diff=lAvg-fAvg;
+      setKpi(0,'今日の練習回数',today.length,'回',today.length?`平均 ${avgCpm}/分`:'まだ未練習');
+      setKpi(1,'今日のベスト速度',today.length?bestCpm:'—','/分',bestCpm>=allBest&&today.length?'🏆 自己ベスト更新':`自己ベスト ${allBest}/分`);
+      setKpi(2,'連続練習日数 🔥',streak,'日',streakSub);
+      setKpi(3,'今日の平均正確率',today.length?avgAcc:'—','%',half>1&&diff!==0?'':today.length?`${today.length}セッション`:'—',
+        half>1&&diff!==0?{cls:diff>0?'trend-up':'trend-dn',txt:`前半→後半 ${diff>0?'+':''}${diff}/分`}:null);
+    } else if(view.startsWith('n')){
       const n=parseInt(view.slice(1));
       const pts=[...rows].sort((a,b)=>a.ts-b.ts).slice(-n);
       if(!pts.length){['直近平均速度','ベスト速度','速度の伸び','平均正確率'].forEach((l,i)=>setKpi(i,l,'—','','—'));return;}
@@ -710,7 +725,12 @@
 
   function renderCalendar(rows){
     const nav=$('calNav'),body=$('calBody'),title=$('calTitle');
-    if(view.startsWith('n')){
+    if(view==='today'){
+      nav.style.display='none';
+      const todayRows=rows.filter(r=>dayKey(r.ts)===todayKey());
+      title.textContent=`今日のセッション別 速度チャート（${todayRows.length}回）`;
+      body.innerHTML=todayRows.length?renderSessionBars(todayRows,todayRows.length):'<div class="empty">今日はまだ練習していません</div>';
+    } else if(view.startsWith('n')){
       nav.style.display='none';
       const n=parseInt(view.slice(1));
       title.textContent=`セッション別 速度チャート（直近${n}回）`;
@@ -763,7 +783,14 @@
 
   function renderChart(rows){
     const title=$('chartTitle'),label=$('viewLabel');
-    if(view.startsWith('n')){
+    if(view==='today'){
+      const todayRows=[...rows].filter(r=>dayKey(r.ts)===todayKey()).sort((a,b)=>a.ts-b.ts);
+      title.textContent='速度・正確率の推移（今日 / セッション別）';
+      label.textContent=`${todayRows.length}件`;
+      const points=todayRows.map((r,i)=>{const d=new Date(r.ts);return {cpm:r.cpm,acc:r.acc,tip:`#${i+1} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}\n速度 ${r.cpm}/分・正確率 ${r.acc}%`};});
+      const labels=todayRows.map(r=>{const d=new Date(r.ts);return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;});
+      drawChart(points,labels);
+    } else if(view.startsWith('n')){
       const n=parseInt(view.slice(1));
       const pts=[...rows].sort((a,b)=>a.ts-b.ts).slice(-n);
       title.textContent=`速度・正確率の推移（直近${n}回 / セッション別）`;
